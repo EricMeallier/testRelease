@@ -21,13 +21,13 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
      mvn versions:set -DnewVersion=$version
      mvn versions:commit
 
-     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" DataProdXML/pom.xml
-     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" EverestRPM/pom.xml
+#     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" DataProdXML/pom.xml
+#     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" EverestRPM/pom.xml
 
      echo "Building and deploying (to Nexus) the release $version..." 
      mvn clean deploy -DskipTests=true
 
-     git commit -a -m "[release.sh] Change POM versions to $version"
+#     git commit -a -m "[release.sh] Change POM versions to $version"
      mvn scm:tag
 
      echo "Preparing the development version $newVersion..." 
