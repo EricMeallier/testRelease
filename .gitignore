@@ -1,0 +1,26 @@
+# Maven #
+target/
+*.log
+
+# Eclipse #
+.project
+.classpath
+.settings
+.settings/*
+.externalToolBuilders
+.externalToolBuilders/*
+
+# IntelliJ IDEA #
+out/
+!.idea/
+.idea/*
+.idea/dataSources.xml
+!.idea/runConfigurations/
+*.iml
+*.ipr
+*.iws
+
+# miscellaneous
+/download
+humans.txt
+test-output
