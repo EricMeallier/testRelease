@@ -2,7 +2,7 @@
 
 versionTag=`mvn help:evaluate -Dexpression=project.version |grep -Ev '(^\[|Download\w+:)'`
 
-if [ `echo $version | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
+if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
      version=`echo $versionTag | cut -f1 -d-`
      major=`echo $version | cut -f1 -d.`
      minor=`echo $version | cut -f2 -d.`
