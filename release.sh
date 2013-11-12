@@ -70,7 +70,7 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
 # Building the release version and push to artifact repo
 ##########################
 
-     git checkout -b testRelease-$version
+     git checkout testRelease-$version
 
      mvn enforcer:enforce
      ret=$?
