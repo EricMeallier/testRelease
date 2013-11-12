@@ -18,8 +18,7 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
      git pull
 
      echo "Preparing the release $version..."
-     mvn versions:set -DnewVersion=$version
-     mvn versions:commit
+     mvn versions:set -DnewVersion=$version versions:commit
 
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" DataProdXML/pom.xml
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" EverestRPM/pom.xml
@@ -32,8 +31,7 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
 
      echo "Preparing the development version $newVersion..." 
 
-     mvn versions:set -DnewVersion=$newVersion
-     mvn versions:commit
+     mvn versions:set -DnewVersion=$newVersion  versions:commit
 
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$newVersion<\/version>/" DataProdXML/pom.xml
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$newVersion<\/version>/" EverestRPM/pom.xml
