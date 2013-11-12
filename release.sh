@@ -27,7 +27,7 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
      echo "Building and deploying (to Nexus) the release $version..." 
      mvn clean deploy -DskipTests=true
 
-     git commit -a -m "[release.sh] Change POM versions to $version"
+     mvn scm:checkin -Dmessage="[release.sh] Change POM versions to $version" -DpushChanges=false
      mvn scm:tag
 
      echo "Preparing the development version $newVersion..." 
@@ -38,8 +38,7 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$newVersion<\/version>/" DataProdXML/pom.xml
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$newVersion<\/version>/" EverestRPM/pom.xml
 
-     git commit -a -m "[release.sh] Change POM versions to $newVersion"
-     git push
+     mvn scm:checkin -Dmessage="[release.sh] Change POM versions to $newVersion"
 
 fi
 
