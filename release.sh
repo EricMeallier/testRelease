@@ -3,6 +3,10 @@
 versionTag=`mvn help:evaluate -Dexpression=project.version |grep -Ev '(^\[|Download\w+:)'`
 
 if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
+
+##########################
+# Clean-up repository
+##########################
      version=`echo $versionTag | cut -f1 -d-`
      major=`echo $version | cut -f1 -d.`
      minor=`echo $version | cut -f2 -d.`
@@ -17,6 +21,10 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
      git reset --hard origin
      git pull
 
+##########################
+# Tagging versions and push to scm
+##########################
+
      echo "Preparing the release $version..."
      mvn versions:set -DnewVersion=$version versions:commit
      ret=$?
@@ -24,24 +32,8 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
 	echo "Problem while changing the version number for release"
 	exit $ret
      fi
-
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" DataProdXML/pom.xml
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$version<\/version>/" EverestRPM/pom.xml
-
-     mvn enforcer:enforce
-     ret=$?
-     if [ $ret -ne 0 ]; then
-	echo "Problem while checking dependencies"
-	exit $ret
-     fi
-
-     echo "Building and deploying (to Nexus) the release $version..." 
-     mvn clean deploy -DskipTests=true
-     ret=$?
-     if [ $ret -ne 0 ]; then
-	echo "Problem while building project"
-	exit $ret
-     fi
 
      mvn scm:checkin -Dmessage="[release.sh] Change POM versions to $version" -DpushChanges=false
      ret=$?
@@ -64,7 +56,6 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
 	echo "Problem while changing the version number for developpement"
 	exit $ret
      fi
-
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$newVersion<\/version>/" DataProdXML/pom.xml
 #     sed -i "1,+10s/<version>.*<\/version>/<version>$newVersion<\/version>/" EverestRPM/pom.xml
 
@@ -75,7 +66,29 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
 	exit $ret
      fi
 
-     git pull
+##########################
+# Building the release version and push to artifact repo
+##########################
+
+     git checkout testRelease-$version
+
+     mvn enforcer:enforce
+     ret=$?
+     if [ $ret -ne 0 ]; then
+	echo "Problem while checking dependencies"
+	exit $ret
+     fi
+
+     echo "Building and deploying (to Nexus) the release $version..." 
+     mvn clean deploy -DskipTests=true
+     ret=$?
+     if [ $ret -ne 0 ]; then
+	echo "Problem while building project"
+	exit $ret
+     fi
+
+then
+     echo "Releasing a none snapshot version"
 fi
 
 
