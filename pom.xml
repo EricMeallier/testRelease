@@ -14,7 +14,7 @@
 
 	<groupId>fr.meallier</groupId>
 	<artifactId>testRelease</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8-SNAPSHOT</version>
 	<name>Test Release</name>
 	<packaging>jar</packaging>
 
@@ -124,6 +124,7 @@
 				<version>1.8.1</version>
 				<configuration>
 					<tag>${project.artifactId}-${project.version}</tag>
+					connectionType>connection</connectionType>
 				</configuration>
 			</plugin>
 			<plugin>
