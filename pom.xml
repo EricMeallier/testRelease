@@ -124,7 +124,7 @@
 				<version>1.8.1</version>
 				<configuration>
 					<tag>${project.artifactId}-${project.version}</tag>
-					connectionType>connection</connectionType>
+					<connectionType>connection</connectionType>
 				</configuration>
 			</plugin>
 			<plugin>
