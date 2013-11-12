@@ -87,7 +87,7 @@ if [ `echo $versionTag | awk '{ print match($0,".*-SNAPSHOT$")}'` -eq 1 ]; then
 	exit $ret
      fi
 
-then
+else
      echo "Releasing a none snapshot version"
 fi
 
