@@ -14,7 +14,7 @@
 
 	<groupId>fr.meallier</groupId>
 	<artifactId>testRelease</artifactId>
-	<version>1.0.17</version>
+	<version>1.0.18-SNAPSHOT</version>
 	<name>Test Release</name>
 	<packaging>jar</packaging>
 
